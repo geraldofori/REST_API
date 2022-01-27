@@ -2,7 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {MONGO_URI} = require('./config');
 
+//Routes
+const postRoutes = require('./routes/api/posts')
+
 const app = express();
+
+//BodyParser Middleware
+app.use(express.json());
 
 //Connect to MongoDB
 mongoose.connect(MONGO_URI,{
@@ -11,6 +17,10 @@ mongoose.connect(MONGO_URI,{
 })
     .then(()=> console.log('MongoDB connected!'))
     .catch(err => console.log(err));
+
+
+    //Use routes
+    app.use('/api/posts', postRoutes);
 
 const PORT = process.env.PORT ||5000;
 
